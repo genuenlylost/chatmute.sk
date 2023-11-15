@@ -1,29 +1,22 @@
-command /mutechat [<text>]:
-    permission: chat.mute
-    permission message: &c You don't have the required permission to perform that command.
-    trigger:
-        if arg-1 is set:
-       	    if {Globalchat} is not set:
-                set {Globalchat} to true
-                broadcast "&cChat muted by &f%player%"
-                stop trigger
-
-            if {Globalchat} is set:
-                clear {Globalchat}
-                broadcast "&aChat unmuted by &f%player%"
-                wait arg-1
+command /mutechat <timespan>:
+	permission: chat.mute
+	permission message: &c You don't have the required permission to perform that command.
+	trigger:
+		if arg-1 is set:
+			if {Globalchat} is not set:
+				set {Globalchat} to true
+				broadcast "&c&lChat muted by &r&c%player% for %arg-1%"
+				wait arg-1
 				set {Globalchat} to false
-        else:
-       	if {Globalchat} is not set:
+		else:
+        if {Globalchat} is not set:
             set {Globalchat} to true
-            broadcast "&cChat muted by &f%player%"
+            broadcast "&c&lChat muted by &r&c%player%"
             stop trigger
 
-       if {Globalchat} is set:
+        if {Globalchat} is set:
             clear {Globalchat}
-            broadcast "&aChat unmuted by &f%player%"
-            wait arg-1
-            set {Globalchat} to false
+            broadcast "&a&lChat unmuted by &r&a%player%"
 
 on chat:
     if {Globalchat} is true:
@@ -31,4 +24,4 @@ on chat:
             stop trigger
         else:
             cancel event
-            send action bar "&cChat is currently muted."
+            send "&cChat is currently muted."
